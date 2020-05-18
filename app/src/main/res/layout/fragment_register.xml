@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="handler"
+            type="com.example.w_mvvm_databinding.ui.RegisterFragment" />
+
+        <variable
+            name="viewModel"
+            type="com.example.w_mvvm_databinding.viewmodels.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.RegisterFragment">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cir_log"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/cir_log"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            android:text="@={viewModel.name}"
+            android:hint="@string/s_input_name"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/editAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            android:hint="@string/s_input_phone"
+            android:text="@={viewModel.account}"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/editPwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editAccount"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            android:hint="@string/s_input_pwd"
+            android:text="@={viewModel.password}"
+            android:layout_marginTop="20dp"/>
+        
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editPwd"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            android:layout_marginTop="30dp"
+            android:onClick="@{(v) -> handler.onClick(v)}"
+            android:text="@string/s_register"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

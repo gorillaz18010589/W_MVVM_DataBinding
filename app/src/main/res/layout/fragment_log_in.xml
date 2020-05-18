@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="handler"
+            type="com.example.w_mvvm_databinding.ui.LogInFragment" />
+
+        <variable
+            name="viewModel"
+            type="com.example.w_mvvm_databinding.viewmodels.LoginViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.LogInFragment"
+        >
+
+
+        <TextView
+            android:id="@+id/txtLogin"
+            style="@style/CaptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/s_pwd_login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <EditText
+            android:id="@+id/editPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:hint="@string/s_input_phone"
+            android:text="@={viewModel.phone}"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLogin"
+            app:layout_constraintWidth_percent="0.72" />
+
+
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/s_input_pwd"
+            android:text="@={viewModel.password}"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editPhone"
+            app:layout_constraintWidth_percent="0.72" />
+
+        <Button
+            android:onClick="@{v -> handler.onClick(v)}"
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/s_login"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editPassword"
+            app:layout_constraintWidth_percent="0.8" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

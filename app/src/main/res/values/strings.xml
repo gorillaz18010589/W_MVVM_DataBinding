@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">W_MVVM_DataBinding</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="s_description">ddewdewfwefw</string>
+    <string name="s_login">登入</string>
+    <string name="s_register">註冊</string>
+    <string name="s_pwd_login">密碼登入</string>
+    <string name="s_input_phone">請輸入帳號/手機號</string>
+    <string name="s_input_pwd">請輸入密碼</string>
+    <string name="s_conFrimInput">請檢查是否都有輸入完成</string>
+    <string name="s_to_many_word">帳號不能大於10碼</string>
+    <string name="s_too_few_word">帳密長度不可小於4碼</string>
+    <string name="s_input_name">姓名:</string>
+</resources>

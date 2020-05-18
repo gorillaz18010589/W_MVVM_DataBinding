@@ -1,0 +1,2 @@
+rootProject.name='W_MVVM_DataBinding'
+include ':app'
