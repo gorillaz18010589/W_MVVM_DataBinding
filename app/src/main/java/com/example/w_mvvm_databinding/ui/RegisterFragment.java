@@ -1,5 +1,6 @@
 package com.example.w_mvvm_databinding.ui;
 
+
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.w_mvvm_databinding.R;
+import com.example.w_mvvm_databinding.api.MyApi;
 import com.example.w_mvvm_databinding.api.MyOkHttpApi;
 import com.example.w_mvvm_databinding.commom.CheckUtils;
 import com.example.w_mvvm_databinding.databinding.FragmentRegisterBinding;
@@ -62,6 +64,11 @@ public class RegisterFragment extends Fragment {
                 Log.v("hank","btnRegister()");
                 register();
                 break;
+
+            case R.id.btnText:
+                Log.v("hank","btnText()");
+                register();
+                break;
         }
     }
 
@@ -100,7 +107,7 @@ public class RegisterFragment extends Fragment {
         RequestBody requestBody = RequestBody.create(mediaType, json);
 
         Request request = new Request.Builder()
-                .url("http://10.0.8.78:8080/MyJaveEE/T3_text_DB_void")
+                .url("http://10.0.8.78:8080/MyJaveEE/T4_ServletRequest物件使用")
                 .post(requestBody)
                 .build();
 
@@ -144,7 +151,7 @@ public class RegisterFragment extends Fragment {
         RequestBody requestBody =  RequestBody.create(mediaType,jsonObject.toString());
 
         Request request = new Request.Builder()
-                .url(url)
+                .url("http://10.0.8.78:8080/MyJaveEE/T4_ServletRequest物件使用")
                 .post(requestBody)
                 .build();
 
@@ -160,6 +167,29 @@ public class RegisterFragment extends Fragment {
                 if(response.isSuccessful()){
                     String body = response.body().string();
                     Log.v(TAG,"body:" + body);
+                }
+            }
+        });
+    }
+
+    public void setHeader(){
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("http://10.0.8.78:8080/MyJaveEE/T4_ServletRequest物件使用")
+                .addHeader("hankdeade", "123232")
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Log.v(TAG,"body:" +response.body().string());
                 }
             }
         });
