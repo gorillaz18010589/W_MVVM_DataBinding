@@ -81,57 +81,57 @@ public class LogInFragment extends Fragment {
         }
     }
 
-    public void Login() {
-        String password = loginViewModel.password.get();
-        String phone = loginViewModel.phone.get();
-        if (CheckUtils.getInstance(getContext()).isOK(phone, password)) {
-            MyApi.getInstance().loginApi(phone, password, "").observe(getViewLifecycleOwner(), new Observer<ApiResponse<LoginResult>>() {
-                @Override
-                public void onChanged(ApiResponse<LoginResult> loginResultApiResponse) {
-                    if (loginResultApiResponse.getResult().isOk()) {
-                        String userName = loginResultApiResponse.getResult().userName;
-                        Log.v(TAG, "loginApi =>userName:" + userName + "msg:" + loginResultApiResponse.getResult().getMessage());
-                        Toast.makeText(getContext(), loginResultApiResponse.getResult().getMessage(), Toast.LENGTH_SHORT).show();
-//                        String accessId = loginResultApiResponse.getResult().accessId;
-//                        tokenApi(accessId);
-                    } else {
-                        String httpMsg = loginResultApiResponse.getError().getHttpMsg();
-                        Log.v(TAG, "錯誤:" + httpMsg);
-                        Toast.makeText(getContext(), loginResultApiResponse.getResult().getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-            });
-        }
-
-//        13232236359
-//        aaaa1111
-
-//        boolean isPhoneInput =  TextUtils.isEmpty(phone) || phone.length()<10;
-
-//        if (!isPhoneInput && !TextUtils.isEmpty(password)) { //有輸入
+//    public void Login() {
+//        String password = loginViewModel.password.get();
+//        String phone = loginViewModel.phone.get();
+//        if (CheckUtils.getInstance(getContext()).isOK(phone, password)) {
 //            MyApi.getInstance().loginApi(phone, password, "").observe(getViewLifecycleOwner(), new Observer<ApiResponse<LoginResult>>() {
 //                @Override
 //                public void onChanged(ApiResponse<LoginResult> loginResultApiResponse) {
 //                    if (loginResultApiResponse.getResult().isOk()) {
 //                        String userName = loginResultApiResponse.getResult().userName;
 //                        Log.v(TAG, "loginApi =>userName:" + userName + "msg:" + loginResultApiResponse.getResult().getMessage());
-//
 //                        Toast.makeText(getContext(), loginResultApiResponse.getResult().getMessage(), Toast.LENGTH_SHORT).show();
+////                        String accessId = loginResultApiResponse.getResult().accessId;
+////                        tokenApi(accessId);
 //                    } else {
-//                        Log.v(TAG, "錯誤");
+//                        String httpMsg = loginResultApiResponse.getError().getHttpMsg();
+//                        Log.v(TAG, "錯誤:" + httpMsg);
 //                        Toast.makeText(getContext(), loginResultApiResponse.getResult().getMessage(), Toast.LENGTH_SHORT).show();
+//
 //                    }
 //                }
 //            });
-//
-//
-//        } else {//沒輸入
-//            Toast.makeText(getContext(),getString(R.string.s_conFrimInput), Toast.LENGTH_SHORT).show();
 //        }
-
-        Log.v(TAG,"Login" +"帳號:" + phone +"/密碼:" + password);
-    }
+//
+////        13232236359
+////        aaaa1111
+//
+////        boolean isPhoneInput =  TextUtils.isEmpty(phone) || phone.length()<10;
+//
+////        if (!isPhoneInput && !TextUtils.isEmpty(password)) { //有輸入
+////            MyApi.getInstance().loginApi(phone, password, "").observe(getViewLifecycleOwner(), new Observer<ApiResponse<LoginResult>>() {
+////                @Override
+////                public void onChanged(ApiResponse<LoginResult> loginResultApiResponse) {
+////                    if (loginResultApiResponse.getResult().isOk()) {
+////                        String userName = loginResultApiResponse.getResult().userName;
+////                        Log.v(TAG, "loginApi =>userName:" + userName + "msg:" + loginResultApiResponse.getResult().getMessage());
+////
+////                        Toast.makeText(getContext(), loginResultApiResponse.getResult().getMessage(), Toast.LENGTH_SHORT).show();
+////                    } else {
+////                        Log.v(TAG, "錯誤");
+////                        Toast.makeText(getContext(), loginResultApiResponse.getResult().getMessage(), Toast.LENGTH_SHORT).show();
+////                    }
+////                }
+////            });
+////
+////
+////        } else {//沒輸入
+////            Toast.makeText(getContext(),getString(R.string.s_conFrimInput), Toast.LENGTH_SHORT).show();
+////        }
+//
+//        Log.v(TAG,"Login" +"帳號:" + phone +"/密碼:" + password);
+//    }
 
 
     //示範API

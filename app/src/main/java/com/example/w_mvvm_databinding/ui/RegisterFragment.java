@@ -1,20 +1,24 @@
 package com.example.w_mvvm_databinding.ui;
-
+//https://blog.csdn.net/xyang81/article/details/7727141
 
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.w_mvvm_databinding.R;
 import com.example.w_mvvm_databinding.api.MyApi;
 import com.example.w_mvvm_databinding.api.MyOkHttpApi;
+import com.example.w_mvvm_databinding.api.result.ApiResponse;
+import com.example.w_mvvm_databinding.api.result.RegisterResult;
 import com.example.w_mvvm_databinding.commom.CheckUtils;
 import com.example.w_mvvm_databinding.databinding.FragmentRegisterBinding;
 import com.example.w_mvvm_databinding.viewmodels.RegisterViewModel;
@@ -78,10 +82,27 @@ public class RegisterFragment extends Fragment {
         String password = registerViewModel.password.get();
         if(CheckUtils.getInstance(getContext()).isEnterThree(name,account,password)){
 //            regsiterApi(name,account,password);
-            registerJsonApi(name,account,password);
+//            registerJsonApi(name,account,password);
+            reApi(name,account,password);
         }
     }
 
+
+
+    public void reApi(String name, String account, String password){
+            MyApi.getInstance().RegisterApi(name,account,password).observe(getViewLifecycleOwner(), new Observer<ApiResponse<RegisterResult>>() {
+                @Override
+                public void onChanged(ApiResponse<RegisterResult> registerResultApiResponse) {
+                    if(registerResultApiResponse.getResult().isOk()){
+                        Log.v("hank","isOk");
+                        Toast.makeText(getContext(),registerResultApiResponse.getResult().getMessage(),Toast.LENGTH_SHORT).show();
+                    }else{
+                        Log.v("hank","notOk");
+
+                    }
+                }
+            });
+    }
 
     public void regsiterApi(String name ,String account , String password){
 

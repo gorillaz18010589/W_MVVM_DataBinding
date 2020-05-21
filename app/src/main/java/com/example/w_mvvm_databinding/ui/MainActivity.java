@@ -46,10 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        StartFragmentBinding startFragmentBinding = DataBindingUtil.setContentView(this,R.layout.start_fragment); //綁定activity要呈現的view,並取得dataBinding物件(1.欲綁定的頁面,2.要呈現的layout頁面)
-        startFragmentBinding.googleBtn.setOnClickListener(this);
-
-
+//        StartFragmentBinding startFragmentBinding = DataBindingUtil.setContentView(this,R.layout.start_fragment); //綁定activity要呈現的view,並取得dataBinding物件(1.欲綁定的頁面,2.要呈現的layout頁面)
+//        startFragmentBinding.googleBtn.setOnClickListener(this);
 
     }
 

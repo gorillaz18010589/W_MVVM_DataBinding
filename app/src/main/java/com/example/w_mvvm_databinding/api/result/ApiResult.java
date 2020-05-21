@@ -16,5 +16,7 @@ public abstract class ApiResult {
         return  message;
     }
 
-
+    public int getCode() {
+        return code;
+    }
 }

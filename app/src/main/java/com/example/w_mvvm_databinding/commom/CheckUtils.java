@@ -62,14 +62,20 @@ public  class CheckUtils {
 
     public boolean isEnterThree(String str1, String str2, String str3) {
         boolean isEnter = false;
-        if (TextUtils.isEmpty(str1.trim()) || TextUtils.isEmpty(str2.trim()) || TextUtils.isEmpty(str3.trim()) ) {
-            //有少輸入
-            Toast.makeText(context, "欄位不能為空", Toast.LENGTH_SHORT).show();
-        } else {
-            //輸入都有填
-            isEnter = true;
-        }
+        if (str1 != null && str2 != null && str3 != null) {
+            //有輸入
+            if (TextUtils.isEmpty(str1.trim()) || TextUtils.isEmpty(str2.trim()) || TextUtils.isEmpty(str3.trim())) {
+                //有少輸入
+                Toast.makeText(context, "欄位不能為空", Toast.LENGTH_SHORT).show();
+            } else {
+                //輸入都有填
+                isEnter = true;
+            }
 
+        } else {
+
+            Toast.makeText(context, "欄位不能為空", Toast.LENGTH_SHORT).show();
+        }
         return isEnter;
     }
 }

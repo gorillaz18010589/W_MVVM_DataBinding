@@ -41,6 +41,7 @@
             app:layout_constraintWidth_percent="0.8"
             android:text="@={viewModel.name}"
             android:hint="@string/s_input_name"
+            android:inputType="text"
             android:layout_marginTop="20dp"/>
 
         <EditText
@@ -51,12 +52,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintWidth_percent="0.8"
-            android:hint="@string/s_input_phone"
+            android:hint="@string/s_input_email_account"
             android:text="@={viewModel.account}"
+            android:inputType="textEmailAddress"
             android:layout_marginTop="20dp"/>
+
 
         <EditText
             android:id="@+id/editPwd"
+            android:inputType="textPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/editAccount"

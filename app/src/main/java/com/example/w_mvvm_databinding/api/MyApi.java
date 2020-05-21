@@ -7,9 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.w_mvvm_databinding.api.request.ApiRequest;
 import com.example.w_mvvm_databinding.api.request.LoginRequest;
+import com.example.w_mvvm_databinding.api.request.RegisterRequest;
 import com.example.w_mvvm_databinding.api.result.ApiResponse;
 import com.example.w_mvvm_databinding.api.result.ApiResult;
 import com.example.w_mvvm_databinding.api.result.LoginResult;
+import com.example.w_mvvm_databinding.api.result.RegisterResult;
+import com.example.w_mvvm_databinding.commom.GsonUtlis;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,6 +33,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -40,7 +44,7 @@ public class MyApi {
     private static OkHttpClient okHttpClient;
     private static String TAG = "hank";
     private static String MSG = "MyApi=>";
-    private static final String url ="";
+    private static final String URL ="http://10.0.8.78:8080/MyJaveEE/WexLu";
 
 
     //1.getInstance 物件實體化
@@ -63,6 +67,28 @@ public class MyApi {
         }
     }
 
+
+
+    //5.Login
+    public MutableLiveData<ApiResponse<LoginResult>> loginApi(String phone, String password, String cart_id) {
+        ApiRequest request = new LoginRequest(phone, password, cart_id);
+        MutableLiveData<ApiResponse<LoginResult>> response = new MutableLiveData<>();
+        Log.v(TAG, "loginApi:" + "request:" + request.toString() + "response:" + response.toString());
+        Callback callback =new ApiResultCallBack<LoginResult>(response,LoginResult.class);
+        doFormBody(request,callback);
+        return response;
+    }
+
+
+
+    public MutableLiveData<ApiResponse<RegisterResult>> RegisterApi (String name, String account, String password){
+        ApiRequest apiRequest = new RegisterRequest(name,account,password,0);
+        MutableLiveData<ApiResponse<RegisterResult>> response = new MutableLiveData<>();
+        Log.v(TAG, "loginApi:" + "request:" + apiRequest.toString() + "response:" + response.toString());
+        Callback callback = new ApiResultCallBack<>(response,RegisterResult.class);
+        doPostJson(apiRequest,callback);
+        return response;
+    }
 
     /*4.doFormBody,將Bean轉成key,value送到body走Post傳送
     1.@param ApiRequest apiRequest => 1.要送出的requestBean
@@ -87,7 +113,7 @@ public class MyApi {
         //C.Request設定
         FormBody formBody = formBodyBuilder.build();
         Request request = new Request.Builder()
-                .url(url)
+                .url(URL)
                 .post(formBody)
                 .build();
 
@@ -96,15 +122,7 @@ public class MyApi {
     }
 
 
-    //5.Login
-    public MutableLiveData<ApiResponse<LoginResult>> loginApi(String phone, String password, String cart_id) {
-        ApiRequest request = new LoginRequest(phone, password, cart_id);
-        MutableLiveData<ApiResponse<LoginResult>> response = new MutableLiveData<>();
-        Log.v(TAG, "loginApi:" + "request:" + request.toString() + "response:" + response.toString());
-        Callback callback =new ApiResultCallBack<LoginResult>(response,LoginResult.class);
-        doFormBody(request,callback);
-        return response;
-    }
+
 
 
     //6.需要實作CallBack讓回來的response自己定義處理
@@ -152,27 +170,27 @@ public class MyApi {
     }
 
     //7.繼承自己寫的MyCallBack,可以玩 onResult(Call call, String responseBody等,就可以玩
-    public class ApiResultCallBack<T extends ApiResult> extends MyCallBack{
+    public class ApiResultCallBack<T extends ApiResult> extends MyCallBack {
         MutableLiveData<ApiResponse<T>> liveData; //MutableLiveData,要玩PostValue
         Class<T> clazz; //有繼承ApiResult的Bean
 
 
         /*A.建構式即可玩到LiveData<ApiResponse<T>>,跟有繼承ApiResult的Bean
-        * 1.@param:MutableLiveData<ApiResponse<T>>liveData => 1.要response回來的MutableLiveData,主要設定postValue給ApiResponse
-        * 2.@param:Class<T> clazz => 2.要用JsonFrom轉型回來存放的類別
-        * */
-        public ApiResultCallBack(MutableLiveData<ApiResponse<T>>liveData, Class<T> clazz){
+         * 1.@param:MutableLiveData<ApiResponse<T>>liveData => 1.要response回來的MutableLiveData,主要設定postValue給ApiResponse
+         * 2.@param:Class<T> clazz => 2.要用JsonFrom轉型回來存放的類別
+         * */
+        public ApiResultCallBack(MutableLiveData<ApiResponse<T>> liveData, Class<T> clazz) {
             this.liveData = liveData;
             this.clazz = clazz;
         }
 
 
         /*B.玩call,跟responseBody,JsonFrom拿到的bean存到<T> result,Data用postValue將result送到ApirResponse建構式時拿到bean
-        * */
+         * */
         @Override
         public void onResult(Call call, String responseBody) {
             Gson gson = new Gson();
-            Log.v(TAG,"ApiResultCallBack => onResult(call,responseBody):" +"responseBody:" + responseBody);
+            Log.v(TAG, "ApiResultCallBack => onResult(call,responseBody):" + "responseBody:" + responseBody);
             //C.將回傳來的responseBody,轉成bean
             T result = gson.fromJson(responseBody, clazz);
 
@@ -187,10 +205,11 @@ public class MyApi {
         //C.當連線失敗時將code,msg,body,用liveData的psotValue將值傳response去建構式
         @Override
         public void onError(Call call, int code, String msg, String body) {
-            liveData.postValue(new ApiResponse<T>(code,msg,body));
+            liveData.postValue(new ApiResponse<T>(code, msg, body));
         }
 
-        public void onResult (T result){ }
+        public void onResult(T result) {
+        }
     }
 
 
@@ -198,7 +217,7 @@ public class MyApi {
      *@param =>Object javabean:預轉成Map的javabean
      *@return =>Map<String, String>:回傳JsonMapo格式
      * */
-    public  Map<String, String> javaBeanToMap(Object javabean) {
+    public Map<String, String> javaBeanToMap(Object javabean) {
         Gson gson = new Gson();
 
         //將傳進來的bean轉成Json
@@ -214,5 +233,29 @@ public class MyApi {
         return map;
     }
 
+
+    public void doPostJson(ApiRequest apiRequest, Callback apiResponseCallBack) {
+        Log.v(TAG, "doPostJson:" + "ApiRequest:" + apiRequest.toString());
+
+        //A.將Bean轉成Map
+        Map<String, String> map = javaBeanToMap(apiRequest);
+
+        //B.將Map轉成Json
+        String json = GsonUtlis.getInstance().toJson(map);
+        Log.v(TAG,"doPostJson()=>" +"json:" +json);
+
+        //設定contentType
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+
+        RequestBody requestBody = RequestBody.create(mediaType, json);
+
+        Request request = new Request.Builder()
+                .url("http://10.0.8.78:8080/MyJaveEE/WexLu")
+                .post(requestBody)
+                .build();
+
+        //D.enqueue.自己寫的CallBack
+        okHttpClient.newCall(request).enqueue(apiResponseCallBack);
+    }
 
 }
