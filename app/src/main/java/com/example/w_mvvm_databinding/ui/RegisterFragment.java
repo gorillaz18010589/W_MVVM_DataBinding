@@ -1,10 +1,12 @@
 package com.example.w_mvvm_databinding.ui;
 //https://blog.csdn.net/xyang81/article/details/7727141
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -21,6 +23,7 @@ import com.example.w_mvvm_databinding.api.result.ApiResponse;
 import com.example.w_mvvm_databinding.api.result.RegisterResult;
 import com.example.w_mvvm_databinding.commom.CheckUtils;
 import com.example.w_mvvm_databinding.databinding.FragmentRegisterBinding;
+import com.example.w_mvvm_databinding.ui.dialog.DialogLoadingFragment;
 import com.example.w_mvvm_databinding.viewmodels.RegisterViewModel;
 import com.google.gson.Gson;
 
@@ -47,6 +50,9 @@ public class RegisterFragment extends Fragment {
     private RegisterViewModel registerViewModel;
     private FragmentRegisterBinding fragmentRegisterBinding;
     private String url ="http://10.0.8.78:8080/MyJaveEE/T3_text_DB_void";
+
+    private DialogLoadingFragment dialogLoadingFragment;
+    private String TAG ="hank";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,6 +102,29 @@ public class RegisterFragment extends Fragment {
                     if(registerResultApiResponse.getResult().isOk()){
                         Log.v("hank","isOk");
                         Toast.makeText(getContext(),registerResultApiResponse.getResult().getMessage(),Toast.LENGTH_SHORT).show();
+                        dialogLoadingFragment = new DialogLoadingFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        dialogLoadingFragment.show(fragmentManager,"DialogLoadingFragment");
+
+                        int code = registerResultApiResponse.getResult().getCode();
+                        Log.v(TAG,String.valueOf(code));
+
+                        if(registerResultApiResponse.getResult().getMessage().equals("OK")){
+                            try {
+                                dialogLoadingFragment.dismiss();
+                                fragmentRegisterBinding.btnRegister.setEnabled(false);
+                                fragmentRegisterBinding.btnRegister.setText("請到Email信箱激活帳號");
+
+                                //叫出email
+//                                Intent intent = new Intent(Intent.ACTION_SENDTO);
+//                                intent.setType("message/rfc822");//設定跳出來的chooser種類
+//                                startActivity(Intent.createChooser(intent, "選擇emailApp接收信件"));
+
+
+                            } catch (Exception ex) {
+
+                            }
+                        }
                     }else{
                         Log.v("hank","notOk");
 

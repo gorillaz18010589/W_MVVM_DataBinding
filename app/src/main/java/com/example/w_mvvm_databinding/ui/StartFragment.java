@@ -7,16 +7,14 @@ package com.example.w_mvvm_databinding.ui;
           4. boolean attachToParent) =>4.是否直接將layout的元件加入到父類別畫面
           * 回傳(<T extends ViewDataBinding> T)
  * */
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
@@ -24,9 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.w_mvvm_databinding.R;
@@ -67,12 +62,25 @@ public class StartFragment extends Fragment  {
                 Toast.makeText(getContext(),"1秒到",Toast.LENGTH_SHORT).show();
             }
         },1000);
+
+
+        //service
+//        initService();
     }
+
+    //推波Serivce
+//    private void initService() {
+//        Intent intentService = new Intent(getContext(), RegisterService.class);
+//        getContext().startService(intentService);
+//        Log.v("hank","initService()");
+//
+//    }
 
     public void onclick(View v){
         switch (v.getId()){
             case R.id.btnLogin:
-                navController.navigate(R.id.action_startFragment_to_logInFragment);
+//                initService();
+//                navController.navigate(R.id.action_startFragment_to_logInFragment);
                 Log.v("hank","btnLogin");
                 break;
 

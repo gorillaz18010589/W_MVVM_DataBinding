@@ -4,7 +4,6 @@ public class RegisterRequest extends ApiRequest {
     private String name;
     private String account;
     private String password;
-    private String hash;
     private int active;
 
     public RegisterRequest(String name, String account, String password, int active) {
@@ -12,6 +11,7 @@ public class RegisterRequest extends ApiRequest {
         this.account = account;
         this.password = password;
         this.active = active;
+        action = "register";
     }
 
 
