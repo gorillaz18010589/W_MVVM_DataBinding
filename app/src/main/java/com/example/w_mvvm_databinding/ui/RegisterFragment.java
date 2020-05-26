@@ -106,19 +106,16 @@ public class RegisterFragment extends Fragment {
                         FragmentManager fragmentManager = getFragmentManager();
                         dialogLoadingFragment.show(fragmentManager,"DialogLoadingFragment");
 
-                        int code = registerResultApiResponse.getResult().getCode();
-                        Log.v(TAG,String.valueOf(code));
-
                         if(registerResultApiResponse.getResult().getMessage().equals("OK")){
                             try {
                                 dialogLoadingFragment.dismiss();
-                                fragmentRegisterBinding.btnRegister.setEnabled(false);
+//                                fragmentRegisterBinding.btnRegister.setEnabled(false);
                                 fragmentRegisterBinding.btnRegister.setText("請到Email信箱激活帳號");
 
-                                //叫出email
-//                                Intent intent = new Intent(Intent.ACTION_SENDTO);
-//                                intent.setType("message/rfc822");//設定跳出來的chooser種類
-//                                startActivity(Intent.createChooser(intent, "選擇emailApp接收信件"));
+//                                叫出email
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setType("message/rfc822");//設定跳出來的chooser種類
+                                startActivity(Intent.createChooser(intent, "選擇emailApp接收信件"));
 
 
                             } catch (Exception ex) {
